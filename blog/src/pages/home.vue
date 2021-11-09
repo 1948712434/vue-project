@@ -1,22 +1,28 @@
 <template>
   <h1>{{ msg }}</h1>
+  <n-button>888</n-button>
+  <router-link to="/about">about</router-link>
+  <router-link to="/login">login</router-link>
 </template>
 
 <script lang="ts">
 import { ref, defineComponent, onMounted } from "vue";
 import {getValue} from '../api/home'
+import { NButton } from 'naive-ui'
 
 export default defineComponent({
-  name: "HelloWorld",
+  name: "home",
   props: {
     msg: {
       type: String,
       required: true,
     },
   },
-  setup: () => {
+  components:{
+    NButton
+  },
+  setup: (props,context) => {
     const count = ref(0);
-
     onMounted(() => {
       getValue({id:1}).then(res=>{
        console.log(res);
