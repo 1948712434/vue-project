@@ -15,8 +15,6 @@ module.exports = {
             connection.query(sql, [id], (err, result) => {
                 res.json(result);
                 
-                
-                console.log(err)
                 connection.release();
             })
         })
