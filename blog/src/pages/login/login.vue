@@ -3,10 +3,13 @@
     <div class="box">
       <img class="logo" src="@/assets/svg/login.svg" alt="" />
       <div class="right">
-        <h1>{{model}}</h1>
+        <h1>{{ model }}</h1>
         <n-form :model="formData" class="form" ref="formRef" :rules="rules">
-          <n-form-item path="useName">
-            <n-input placeholder="请输入用户名" v-model:value="formData.useName">
+          <n-form-item path="userName">
+            <n-input
+              placeholder="请输入用户名"
+              v-model:value="formData.userName"
+            >
               <template #prefix>
                 <n-icon>
                   <person />
@@ -14,7 +17,10 @@
             ></n-input>
           </n-form-item>
           <n-form-item path="passWorld">
-            <n-input placeholder="请输入密码" v-model:value="formData.passWorld"
+            <n-input
+              placeholder="请输入密码"
+              type="password"
+              v-model:value="formData.passWorld"
               ><template #prefix>
                 <n-icon>
                   <shield-checkmark-sharp />
@@ -22,8 +28,8 @@
             ></n-input>
           </n-form-item>
           <n-form-item>
-            <n-button type="info" @click="login" :block="true"
-              >立即{{model}}</n-button
+            <n-button type="info" @click="toLogin" :block="true"
+              >立即{{ model }}</n-button
             >
           </n-form-item>
           <div style="text-align: right">
@@ -33,7 +39,9 @@
               target="_blank"
               type="info"
               @click="tabModel"
-              >{{model==='登录'?'注册账号':'已有账号，立即登录'}}</n-button
+              >{{
+                model === "登录" ? "注册账号" : "已有账号，立即登录"
+              }}</n-button
             >
           </div>
         </n-form>
@@ -54,7 +62,7 @@ import {
   NIcon,
 } from "naive-ui";
 import { Person, ShieldCheckmarkSharp } from "@vicons/ionicons5";
-
+import { login } from "../../api/home";
 export default defineComponent({
   components: {
     NForm,
@@ -68,8 +76,8 @@ export default defineComponent({
     NNotificationProvider,
   },
   setup() {
-    let formData:object = reactive({
-      useName: "",
+    let formData: any = reactive({
+      userName: "",
       passWorld: "",
     });
 
@@ -77,24 +85,24 @@ export default defineComponent({
     const formRef: any = ref(null);
 
     //登录和注册
-    let model:any = ref('登录');
+    let model: any = ref("登录");
 
     //切换登录和注册
-    const tabModel = ()=>{
-      if(model.value==='登录'){
-        model.value='注册';
-      }else{
-        model.value='登录';
+    const tabModel = () => {
+      if (model.value === "登录") {
+        model.value = "注册";
+      } else {
+        model.value = "登录";
       }
       formRef.value.restoreValidation();
-    }
+    };
 
     //信息弹窗
     const notification = useNotification();
 
     //表单验证规则
     let rules = reactive({
-      useName: {
+      userName: {
         required: true,
         trigger: ["blur", "input"],
         message: "请输入用户名",
@@ -106,10 +114,15 @@ export default defineComponent({
       },
     });
 
-    let login = () => {
+    const toLogin = () => {
       formRef.value.validate((errors: any) => {
         if (!errors) {
-          console.log(`登陆中...`);
+          login({
+            name:formData.userName,
+            password:formData.password,
+          }).then((res: any) => {
+            console.log(res);
+          });
         } else {
           notification.warning({
             content: "提示",
@@ -127,7 +140,7 @@ export default defineComponent({
       model,
       formData,
       rules,
-      login,
+      toLogin,
     };
   },
 });

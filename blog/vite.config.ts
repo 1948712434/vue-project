@@ -23,6 +23,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': _resolve('src'),
+      '@api': _resolve('src/api'),
       '@assets': _resolve('src/assets'),
       '@comps': _resolve('src/components'),
       '@utils': _resolve('src/utils'),

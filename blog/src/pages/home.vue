@@ -1,14 +1,14 @@
 <template>
   <h1>{{ msg }}</h1>
-  <n-button>888</n-button>
+  <n-button @click="getSpace">888</n-button>
   <router-link to="/about">about</router-link>
   <router-link to="/login">login</router-link>
 </template>
 
 <script lang="ts">
 import { ref, defineComponent, onMounted } from "vue";
-import {getValue} from '../api/home'
-import { NButton } from 'naive-ui'
+import { getValue, space } from "../api/home";
+import { NButton } from "naive-ui";
 
 export default defineComponent({
   name: "home",
@@ -18,20 +18,29 @@ export default defineComponent({
       required: true,
     },
   },
-  components:{
-    NButton
+  components: {
+    NButton,
   },
-  setup: (props,context) => {
+  setup: (props, context) => {
     const count = ref(0);
     onMounted(() => {
-      getValue({id:1}).then(res=>{
-       console.log(res);
-      },err=>{
-        console.log(err);
-      })
+      getValue({ id: 1 }).then(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     });
 
-    return { count };
+    const getSpace = () => {
+      space().then((res) => {
+        console.log(res);
+      });
+    };
+
+    return { count, getSpace };
   },
 });
 </script>
