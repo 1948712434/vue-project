@@ -1,0 +1,30 @@
+卷 Windows-SSD 的文件夹 PATH 列表
+卷序列号为 D2B6-028C
+C:.
+│  App.vue
+│  main.ts
+│  shims-vue.d.ts
+│  tree.txt
+│  vite-env.d.ts
+│  
+├─api
+│  │  base.js
+│  │  
+│  └─home
+│          index.js
+│          
+├─assets
+│  │  logo.png
+│  │  
+│  └─css
+│          index.css
+│          
+├─components
+│      HelloWorld.vue
+│      
+├─request
+│      http.js
+│      
+└─router
+        index.ts
+        
